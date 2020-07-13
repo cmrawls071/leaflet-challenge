@@ -43,26 +43,22 @@ d3.json(queryURL, function(data) {
       radius: markerSize(data.features[i].properties.mag)
     }).bindPopup("<h3>" + data.features[i].properties.place + "</h3> <hr> <h4>Magnitude: " + data.features[i].properties.mag + "</h4>").addTo(myMap);
   };
-
-  var legend = L.control({position: 'bottomright'});
-
-  legend.onAdd = function (map) {
-  
-      var div = L.DomUtil.create('div', 'info legend');
-          var grades = [0, 1, 2, 3, 4, 5, 10];
-          var labels = [];
-  
-      // loop through our density intervals and generate a label with a colored square for each interval
-      for (var i = 0; i < grades.length; i++) {
-          div.innerHTML +=
-              '<i style="background:' + getColor(grades[i] + 1) + '"></i> ' +
-              grades[i] + (grades[i + 1] ? '&ndash;' + grades[i + 1] + '<br>' : '+');
-      }
-  
-      return div;
-  };
-  
-  legend.addTo(map);
 });
 
+
+var legend = L.control({ position: "bottomleft" });
+
+legend.onAdd = function(map) {
+  var div = L.DomUtil.create("div", "legend");
+  div.innerHTML += '<i style="background: #79BA00"></i><span>0-1</span><br>';
+  div.innerHTML += '<i style="background: #BBD600"></i><span>1-2</span><br>';
+  div.innerHTML += '<i style="background: #F0DB00"></i><span>2-3</span><br>';
+  div.innerHTML += '<i style="background: #FF9222"></i><span>3-4</span><br>';
+  div.innerHTML += '<i style="background: #FF9700"></i><span>4-5</span><br>';
+  div.innerHTML += '<i style="background: #DF3F00"></i><span>5+</span><br>';
+
+  return div;
+};
+
+legend.addTo(myMap);
 
